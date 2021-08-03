@@ -169,5 +169,19 @@ module.exports = {
         }).catch((err) => {
             console.error(err)
         })
+    },
+    async removeItemsFromPlaylist(playlist_id, tracks) {
+        return await axios.delete(`https://api.spotify.com/v1/playlists/${playlist_id}/tracks`, {
+            data: {
+                tracks
+            },
+            headers: {
+                'Authorization': `Bearer ${process.env.access_token}`
+            }
+        }).then((res) => {
+            return res.data
+        }).catch((err) => {
+            console.error(err)
+        })
     }
 }

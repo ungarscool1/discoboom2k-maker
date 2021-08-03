@@ -79,9 +79,12 @@ async function populateSpotify(apple_music_result) {
         spinner.succeed(`Existing tracks fetched`)
         spinner = ora('Removing tracks').start()
         for (let i = 0; i < items.length; i++)
-            setTimeout(() => {
-                spotify.removeItemFromPlaylist(playlist.id, items[i].track.id)
-            }, 500)
+            tracks.push({
+                "uri": items[i].track.uri,
+                "positions": [i]
+            })
+        await spotify.removeItemsFromPlaylist(playlist.id, tracks)
+        tracks = []
         spinner.succeed('All tracks are removed')
     }
     spinner = ora('Populating playlist').start()
@@ -93,7 +96,6 @@ async function populateSpotify(apple_music_result) {
         else
             console.log(`${song} n'a pas été trouvé :/`)
     }
-    //tracks.forEach(track => console.log(track))
     spotify.addItemsToPlaylist(playlist.id, tracks)
     spinner.succeed('Your playlist is ready')
 }
@@ -101,13 +103,7 @@ async function populateSpotify(apple_music_result) {
 loginCheck(spinner).then(async () => {
     var result = await require('./src/scrap_apple').getPage(process.argv[2])
     await populateSpotify(result)
-    //console.log(result)
 }).catch((err) => {
     console.error(err)
     process.exit(1)
 })
-//spinner.stop()
-//console.log(spotify.getPlaylists())
-
-// TODO: scrap apple music
-// TODO: Add to spotify
