@@ -39,7 +39,7 @@ module.exports = {
     },
     /**
      * Get playlists
-     * @returns Spotify items
+     * @returns {Array} Spotify items
      */
     async getPlaylists() {
         return await axios.get("https://api.spotify.com/v1/me/playlists", {
@@ -51,6 +51,19 @@ module.exports = {
         }).catch((err) => {
             console.error(err);
         })
+    },
+    /**
+     * Get playlist by name
+     * @param {String} name Playlist name
+     * @returns {*} Spotify response
+     */
+    async getPlaylistByName(name) {
+        var playlists = await this.getPlaylists()
+        for (let i = 0; i < playlists.length; i++) {
+            if (playlists[i].name === name)
+                return playlists[i]
+        }
+        return 'fail'
     },
     /**
      * Create a playlist
@@ -107,11 +120,10 @@ module.exports = {
         }).then((res) => {
             return res.data
         }).catch((err) => console.error(err))
-    }
-    ,
+    },
     async addItemToPlaylist(playlist_id, track_id) {
         return await axios.post(`https://api.spotify.com/v1/playlists/${playlist_id}/tracks`, {
-            uris: [track_id]
+            uris: [`spotify:track:${track_id}`]
         }, {
             headers: {
                 'Content-Type': 'application/json',
@@ -148,6 +160,9 @@ module.exports = {
                         ]
                     }
                 ]
+            },
+            headers: {
+                'Authorization': `Bearer ${process.env.access_token}`
             }
         }).then((res) => {
             return res.data
