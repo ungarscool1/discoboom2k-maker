@@ -15,7 +15,7 @@ if (!process.env.user_creds) {
 }
 var spinner = ora('Waiting authorization...').start();
 
-function aaa(spinner) {
+function loginCheck(spinner) {
     var i = 0
     return new Promise((resolve, reject) => {
         var interval = setInterval(() => {
@@ -39,7 +39,7 @@ function aaa(spinner) {
         }, 600000);
     })
 }
-aaa(spinner).then(async () => {
+loginCheck(spinner).then(async () => {
     //var aaaaaa = await spotify.getPlaylists()
     //console.log(aaaaaa)
 })
