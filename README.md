@@ -18,6 +18,16 @@ Default scopes in example are required to edit, create and view your playlists. 
 
 The market selection is very important, if you add a song forbidden in your country you aren't allow to listen it.
 
+### Apple Music: Artist delimiter
+
+It's an important line, following your country the artist delimiter can change.
+
+| Language | Delimiter |
+|----------|-----------|
+| English  |    and    |
+| Français |    et     |
+| Español  |    y      |
+
 ## How to use the app
 
 Launch the app with: ``db2k <apple music playlist link>``, the app will define the title, the description and fill music an playlist in Spotify from Apple Music.
