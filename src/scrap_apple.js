@@ -2,8 +2,12 @@ const cheerio = require('cheerio')
 const axios = require('axios').default
 const ora = require('ora')
 
-
 module.exports = {
+    /**
+     * Get Apple Music playlist
+     * @param {String} url 
+     * @returns {*}
+     */
     async getPage(url)
     {
         var spinner = ora('Fetching playlist...').start();
@@ -25,9 +29,9 @@ module.exports = {
             return {
                 title: await $('h1.product-name', res.data).text().trim(),
                 description: await $('div.product-page-header__metadata--notes.typography-body-tall', res.data).text().trim(),
-                songs}
+                songs
+            }
         }).catch((err) => {
-            console.error(err)
             spinner.fail(`Can't fetch Apple Music's playlist (code: ${err})`)
         })
     }
