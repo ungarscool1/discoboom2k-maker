@@ -23,11 +23,13 @@ module.exports = {
         await axios.post("https://accounts.spotify.com/api/token", params, {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
-                'Authorization': 'Basic ' + Buffer(`${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`).toString('base64')
+                'Authorization': 'Basic ' + Buffer.from(`${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`).toString('base64')
             }
         }).then((res) => {
             process.env["access_token"] = res.data.access_token
             fs.writeFileSync('./data/keys.json', JSON.stringify(res.data));
+        }).catch(() => {
+            process.env["access_token"] = 'false'
         })
     },
     async getRefreshedTokens(code) {
@@ -39,10 +41,12 @@ module.exports = {
         await axios.post("https://accounts.spotify.com/api/token", params, {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
-                'Authorization': 'Basic ' + Buffer(`${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`).toString('base64')
+                'Authorization': 'Basic ' + Buffer.from(`${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`).toString('base64')
             }
         }).then((res) => {
             process.env["access_token"] = res.data.access_token
+        }).catch(() => {
+            process.env["access_token"] = 'false'
         })
     }
 }

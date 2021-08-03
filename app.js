@@ -18,30 +18,42 @@ var spinner = ora('Waiting authorization...').start();
 function loginCheck(spinner) {
     var i = 0
     return new Promise((resolve, reject) => {
+        var timeout = setTimeout(() => {
+            spinner.fail('Timeout 10 minutes')
+            clearInterval(interval)
+            clearTimeout(timeout)
+            reject('Timed out')
+        }, 600000);
         var interval = setInterval(() => {
-            if (process.env.access_token) {
+            if (process.env.access_token === 'false') {
+                spinner.fail('Something went wrong while authentification.')
+                clearInterval(interval)
+                clearTimeout(timeout)
+                reject('Authentification failed.')
+            } else if (process.env.access_token) {
                 spotify.getUserInfo().then((user) => {
                     spinner.succeed(`Logged in as ${user.display_name} (${user.id})`)
                 })
                 spinner.stop()
                 clearInterval(interval)
+                clearTimeout(timeout)
                 resolve(true)
             }
-            if (i == 240)
-                spinner.warn('It takes too long :/')
-            if (i == 300)
+            if (i == 240) {
+                spinner.warn('It takes longer than usual :/')
                 spinner.start('Waiting authorization...')
+            }
             i++
         }, 250)
-        setTimeout(() => {
-            spinner.fail('Timeout 10 minutes')
-            reject(false)
-        }, 600000);
     })
 }
+
 loginCheck(spinner).then(async () => {
     //var aaaaaa = await spotify.getPlaylists()
     //console.log(aaaaaa)
+}).catch((err) => {
+    console.error(err)
+    process.exit(1)
 })
 //spinner.stop()
 //console.log(spotify.getPlaylists())
