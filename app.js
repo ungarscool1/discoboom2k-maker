@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 require('dotenv').config()
 const config = require('./src/configuration')
 const ora = require('ora');
@@ -88,6 +89,7 @@ async function populateSpotify(apple_music_result) {
         spinner.succeed('All tracks are removed')
     }
     spinner = ora('Populating playlist').start()
+    let today = new Date()
     for (let i = 0; i < apple_music_result.songs.length; i++) {
         const song = apple_music_result.songs[i]
         var track = await spotify.getTrackByName(song)
@@ -96,11 +98,12 @@ async function populateSpotify(apple_music_result) {
         else
             console.log(`${song} n'a pas été trouvé :/`)
     }
-    spotify.addItemsToPlaylist(playlist.id, tracks)
+    await spotify.addItemsToPlaylist(playlist.id, tracks)
+    await spotify.updatePlaylistDescription(playlist.id, `Last update: ${today.getDate()}/${today.getMonth() + 1}/${today.getFullYear()}`)
     spinner.succeed('Your playlist is ready')
 }
 
-loginCheck(spinner).then(async () => {
+loginCheck(spinner).then(async() => {
     var result = await require('./src/scrap_apple').getPage(process.argv[2])
     await populateSpotify(result)
 }).catch((err) => {
