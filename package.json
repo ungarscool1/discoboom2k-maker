@@ -1,35 +1,35 @@
 {
-  "name": "discoboom2k-maker",
-  "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
-  "bin": {
-    "app": "./app.js"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ungarscool1/discoboom2k-maker.git"
-  },
-  "keywords": [
-    "spotify",
-    "Apple",
-    "Music"
-  ],
-  "author": "Léo Godard <contact@legodard.fr>",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/ungarscool1/discoboom2k-maker/issues"
-  },
-  "homepage": "https://github.com/ungarscool1/discoboom2k-maker#readme",
-  "dependencies": {
-    "axios": "^0.21.2",
-    "cheerio": "^1.0.0-rc.10",
-    "dotenv": "^10.0.0",
-    "express": "^4.17.1",
-    "open": "^8.2.1",
-    "ora": "^5.4.1"
-  }
+    "name": "discoboom2k-maker",
+    "version": "1.0.0",
+    "description": "",
+    "main": "app.js",
+    "bin": {
+        "app": "./app.js"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ungarscool1/discoboom2k-maker.git"
+    },
+    "keywords": [
+        "spotify",
+        "Apple",
+        "Music"
+    ],
+    "author": "Léo Godard <contact@legodard.fr>",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/ungarscool1/discoboom2k-maker/issues"
+    },
+    "homepage": "https://github.com/ungarscool1/discoboom2k-maker#readme",
+    "dependencies": {
+        "axios": "^0.24.0",
+        "cheerio": "^1.0.0-rc.10",
+        "dotenv": "^10.0.0",
+        "express": "^4.17.1",
+        "open": "^8.4.0",
+        "ora": "^5.4.1"
+    }
 }
